@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>будешь моей девушкой?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --ink: #2c2114;
+            --paper: #f2e8d5;
+            --paper-2: #e8dabd;
+            --dusk-1: #241f2e;
+            --dusk-2: #0f0c14;
+            --rose: #d96b8b;
+            --rose-dark: #a84464;
+            --lavender: #9a8fc0;
+            --sage: #7c9885;
+            color-scheme: dark;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100%;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: var(--dusk-2);
+            color: var(--ink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* ---------- scene ---------- */
+        .scene {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+            background:
+                radial-gradient(120% 90% at 50% -10%, #3b2f4a 0%, var(--dusk-1) 55%, var(--dusk-2) 100%);
+        }
+
+        .sun {
+            position: absolute;
+            left: 50%;
+            top: 22%;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle at 35% 35%, #ffd6e4, var(--rose) 60%, var(--rose-dark) 100%);
+            box-shadow: 0 0 90px 20px rgba(217, 107, 139, .35);
+            transition: transform 1s ease, opacity 1s ease;
+        }
+
+        .hill {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .hill svg {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .hill.back {
+            opacity: .55;
+            bottom: 6%;
+        }
+
+        .hill.front {
+            bottom: 0;
+        }
+
+        /* floating hearts / sparks */
+        .spark {
+            position: fixed;
+            bottom: -10px;
+            border-radius: 50%;
+            background: #ffd9e6;
+            opacity: 0;
+            animation: rise linear infinite;
+        }
+
+        @keyframes rise {
+            0% {
+                opacity: 0;
+                transform: translateY(0) translateX(0) scale(1);
+            }
+
+            10% {
+                opacity: .8;
+            }
+
+            90% {
+                opacity: .5;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-70vh) translateX(20px) scale(1.6);
+            }
+        }
+
+        /* ---------- ticket card ---------- */
+        .stage {
+            position: relative;
+            width: min(92vw, 460px);
+        }
+
+        .ticket {
+            position: relative;
+            background: var(--paper);
+            border-radius: 22px;
+            padding: 52px 36px 40px;
+            text-align: center;
+            box-shadow: 0 40px 90px rgba(0, 0, 0, .5), 0 2px 0 rgba(255, 255, 255, .4) inset;
+            animation: rise-in .7s cubic-bezier(.2, .8, .2, 1);
+        }
+
+        @keyframes rise-in {
+            from {
+                opacity: 0;
+                transform: translateY(28px) scale(.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .notch {
+            position: absolute;
+            top: 50%;
+            width: 34px;
+            height: 34px;
+            background: var(--dusk-2);
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+
+        .notch.l {
+            left: -17px;
+        }
+
+        .notch.r {
+            right: -17px;
+        }
+
+        .perf {
+            border-top: 2px dashed rgba(44, 33, 20, .25);
+            margin: 26px -10px 0;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--lavender);
+            font-size: 13px;
+            letter-spacing: .02em;
+            margin-bottom: 14px;
+        }
+
+        .eyebrow svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        h1 {
+            font-family: "Fraunces", Georgia, serif;
+            font-weight: 600;
+            font-size: clamp(34px, 8vw, 46px);
+            line-height: 1.05;
+            letter-spacing: -.01em;
+            margin: 0 0 12px;
+        }
+
+        .subtitle {
+            font-size: 15.5px;
+            color: rgba(44, 33, 20, .62);
+            max-width: 30ch;
+            margin: 0 auto 34px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+            position: relative;
+            min-height: 56px;
+        }
+
+        button {
+            font-family: inherit;
+            border: none;
+            cursor: pointer;
+            padding: 15px 30px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+        }
+
+        .yes {
+            background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+            color: #fff6f9;
+            box-shadow: 0 12px 26px rgba(168, 68, 100, .4);
+        }
+
+        .yes:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 32px rgba(168, 68, 100, .5);
+        }
+
+        .yes:active {
+            transform: translateY(0);
+        }
+
+        .no {
+            background: transparent;
+            color: rgba(44, 33, 20, .55);
+            border: 1.5px solid rgba(44, 33, 20, .22);
+        }
+
+        .no:hover {
+            background: rgba(44, 33, 20, .06);
+        }
+
+        .hint {
+            margin-top: 16px;
+            font-size: 12.5px;
+            color: rgba(44, 33, 20, .4);
+            min-height: 16px;
+        }
+
+        /* ---------- result screens ---------- */
+        .result {
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+            animation: rise-in .5s ease;
+        }
+
+        .question.hide {
+            display: none;
+        }
+
+        .heart-scene {
+            width: 100%;
+            height: 120px;
+            margin-bottom: 18px;
+        }
+
+        .result h2 {
+            font-family: "Fraunces", Georgia, serif;
+            font-weight: 600;
+            font-size: clamp(30px, 7vw, 40px);
+            margin: 0 0 8px;
+            color: var(--rose-dark);
+        }
+
+        .result p {
+            color: rgba(44, 33, 20, .6);
+            font-size: 15px;
+            margin: 0;
+        }
+
+        /* no-result style */
+        .result-no h2 {
+            color: rgba(44, 33, 20, .55);
+        }
+
+        .result-no .cloud-scene {
+            width: 100%;
+            height: 120px;
+            margin-bottom: 18px;
+        }
+
+        .heart-beat {
+            transform-origin: center;
+            animation: beat 1.4s ease-in-out infinite;
+        }
+
+        @keyframes beat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            15% {
+                transform: scale(1.15);
+            }
+
+            30% {
+                transform: scale(1);
+            }
+
+            45% {
+                transform: scale(1.1);
+            }
+
+            60% {
+                transform: scale(1);
+            }
+        }
+
+        .float-slow {
+            animation: floaty 4s ease-in-out infinite;
+        }
+
+        @keyframes floaty {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .sun,
+            .spark,
+            .ticket,
+            .result.show,
+            .heart-beat,
+            .float-slow {
+                animation: none !important;
+            }
+        }
+
+        @media (max-width:420px) {
+            .ticket {
+                padding: 44px 22px 32px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="scene">
+        <div class="sun" id="sun"></div>
+        <div class="hill back">
+            <svg viewBox="0 0 800 200" preserveAspectRatio="none">
+                <path fill="#181420" d="M0,140 C150,80 300,160 460,110 C600,70 700,130 800,90 L800,200 L0,200 Z" />
+            </svg>
+        </div>
+        <div class="hill front">
+            <svg viewBox="0 0 800 180" preserveAspectRatio="none">
+                <path fill="#0c0a10" d="M0,120 C180,170 340,90 520,130 C650,158 720,110 800,140 L800,200 L0,200 Z" />
+            </svg>
+        </div>
+    </div>
+
+    <main class="stage">
+        <div class="ticket">
+            <span class="notch l"></span><span class="notch r"></span>
+
+            <div class="question" id="question">
+                <h1>будешь моей девушкой?</h1>
+                <p class="subtitle">Мне очень нравится проводить с тобой время и хочу чтоб это продолжалось</p>
+
+                <div class="buttons" id="buttonRow">
+                    <button class="yes" id="yesBtn" onclick="sayYes()">Да</button>
+                    <button class="no" id="noBtn" onclick="sayNo()">Нет</button>
+                </div>
+                <p class="hint" id="hint">&nbsp;</p>
+            </div>
+
+            <!-- YES result -->
+            <div class="result result-yes" id="resultYes">
+                <svg class="heart-scene" viewBox="0 0 400 120">
+                    <g class="heart-beat">
+                        <path
+                            d="M200 95 C200 95 140 65 115 45 C95 28 100 10 120 10 C138 10 150 25 200 60 C250 25 262 10 280 10 C300 10 305 28 285 45 C260 65 200 95 200 95Z"
+                            fill="var(--rose)" opacity="0.9" />
+                    </g>
+                    <circle cx="80" cy="30" r="7" fill="rgba(217,107,139,.25)" />
+                    <circle cx="320" cy="25" r="10" fill="rgba(217,107,139,.18)" />
+                    <circle cx="355" cy="70" r="5" fill="rgba(217,107,139,.2)" />
+                    <circle cx="45" cy="75" r="8" fill="rgba(217,107,139,.15)" />
+                </svg>
+                <h2>УРАААААА!!!!!!!!!!!!</h2>
+            </div>
+
+            <!-- NO result -->
+            <div class="result result-no" id="resultNo">
+                <svg class="cloud-scene float-slow" viewBox="0 0 400 120">
+                    <ellipse cx="200" cy="70" rx="90" ry="30" fill="rgba(154,143,192,.25)" />
+                    <ellipse cx="150" cy="60" rx="50" ry="24" fill="rgba(154,143,192,.3)" />
+                    <ellipse cx="250" cy="62" rx="55" ry="26" fill="rgba(154,143,192,.3)" />
+                    <circle cx="100" cy="35" r="4" fill="rgba(154,143,192,.4)" />
+                    <circle cx="320" cy="45" r="5" fill="rgba(154,143,192,.35)" />
+                    <circle cx="355" cy="80" r="3" fill="rgba(154,143,192,.3)" />
+                </svg>
+                <h2>Ну ладно</h2>
+                <p>Без обид</p>
+            </div>
+
+            <div class="perf"></div>
+        </div>
+    </main>
+
+    <script>
+        // floating hearts / sparks
+        for (let i = 0; i < 18; i++) {
+            const s = document.createElement('div');
+            const size = Math.random() * 4 + 2;
+            s.className = 'spark';
+            s.style.left = Math.random() * 100 + 'vw';
+            s.style.width = size + 'px';
+            s.style.height = size + 'px';
+            s.style.background = Math.random() > 0.5 ? '#ffd9e6' : '#e6d9ff';
+            s.style.animationDuration = (Math.random() * 6 + 7) + 's';
+            s.style.animationDelay = (Math.random() * 8) + 's';
+            document.body.appendChild(s);
+        }
+
+        // sun drifts slightly toward dusk on load
+        window.addEventListener('load', () => {
+            document.getElementById('sun').style.transform = 'translate(-50%,-40%)';
+        });
+
+        function showResult(id) {
+            document.getElementById('question').classList.add('hide');
+            document.querySelectorAll('.result').forEach(el => el.classList.remove('show'));
+            document.getElementById(id).classList.add('show');
+        }
+
+        function sayYes() {
+            showResult('resultYes');
+            const heart = document.querySelector('.heart-beat');
+            if (heart) { heart.style.animation = 'beat 1s ease-in-out infinite'; }
+        }
+
+        function sayNo() {
+            showResult('resultNo');
+        }
+    </script>
+
+</body>
+
+</html>
